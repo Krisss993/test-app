@@ -24,6 +24,9 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ml-chat.onrender.com','test-app-y0lp
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,7 +42,11 @@ INSTALLED_APPS = [
     'langchain_chat',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'corsheaders',
+    'crispy_forms',
+    'crispy_bootstrap4',
+    'core',
 
 ]
 
@@ -53,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -80,6 +88,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # WSGI_APPLICATION = 'Django_React_Langchain_Stream.wsgi.application'
 ASGI_APPLICATION = "Django_React_Langchain_Stream.asgi.application"
@@ -143,6 +153,7 @@ STATICFILES_DIRS = [
 # Directory where static files are collected by `collectstatic` during production
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files configuration
 MEDIA_URL = '/media/'  # The base URL to serve media files
@@ -157,3 +168,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/accounts/login/'
 
 
+# if DEBUG is False:
+#    SESSION_COOKIE_SECURE = True
+#    SECURE_BROWSER_XSS_FILTER = True
+#    SECURE_CONTENT_TYPE_NOSNIFF = True
+#    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#    SECURE_HSTS_SECONDS = 31536000
+#    SECURE_REDIRECT_EXEMPT = []
+#    SECURE_SSL_REDIRECT = True
+#    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDER_PROTO', 'https')
+#    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
