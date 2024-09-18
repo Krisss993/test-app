@@ -22,8 +22,16 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ml-chat.onrender.com','test-app-y0lp.onrender.com']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://test-app-y0lp.onrender.com',
+]
+CSRF_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CORS_ALLOW_ALL_ORIGINS = True
 
+LANGUAGE_CODE = 'en-us'  # or another default language
+USE_I18N = True
+USE_L10N = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -166,7 +174,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/accounts/login/'
-
+ACCOUNT_SIGNUP_REDIRECT_URL = '/profile/'
 
 # if DEBUG is False:
 #    SESSION_COOKIE_SECURE = True
