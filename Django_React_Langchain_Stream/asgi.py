@@ -4,9 +4,12 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack  
 import langchain_stream.routing  
 import langchain_chat.routing  
+import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Django_React_Langchain_Stream.settings')  
-  
+django.setup()
+import langchain_stream.routing  
+import langchain_chat.routing  
 application = ProtocolTypeRouter({  
   "http": get_asgi_application(),  
   "websocket": AuthMiddlewareStack(  
