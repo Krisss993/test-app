@@ -13,6 +13,7 @@
          <!-- Sidebar for listing chats and filtering -->
         <button class="toggle-sidebar-btn" id="toggle-sidebar-btn">Show Conversations</button>
         <div class="sidebar" id="sidebar">
+            <a href="{% url 'home' %}" class="">Home Page</a>
             <a href="{% url 'langchain_chat:chat'%}" class="">Chatbot</a>
             <h2>Your Conversations</h2>
             <button id="new-chat-btn">New Chat</button>
@@ -49,7 +50,7 @@
         <div class="chat-container">
             <div class="messages-container" id="messages-container">
                 
-                <!-- Loop over messages and display them -->
+                <!-- Loop over messages -->
                 {% for message in docs_messages %}
                 <div class="message {% if message.is_user_message %}user-message{% elif message.is_ai_message %}ai-message{% endif %}">
                         <strong>{{ message.sender }}</strong>
@@ -65,7 +66,6 @@
                 {% endif %}
             </div>
             
-            <!-- Add this to your HTML -->
             <div id="loading-popup" class="loading-popup" style="display: none;">
                 <p>Analyzing documents, please wait...</p>
             </div>
@@ -75,6 +75,7 @@
                 <button type="submit">Upload</button>
             </form>
             <form id="input-form" class="input-form">
+                {% csrf_token %}
                 <input type="text" id="message-input" placeholder="Type your message here..."/>
                 <button type="submit">Send</button>
             </form>

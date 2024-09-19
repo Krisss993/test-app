@@ -6,73 +6,48 @@
    <title> {% block head_title %}Data Science{% endblock %}</title>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+   <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
    <meta name="msapplication-TileColor" content="#ffffff">
    <meta name="theme-color" content="#ffffff">
-
-
 </head>
 
-<body >
+<body>
 
-<div class="site-wrap" >
+<div class="site-wrap">
    <header class="site-navbar" role="banner">
        <div class="site-navbar-top">
-           <div class="container justify-content-right">
-               <div class="justify-content-right">
-                   <div class="col-12 col-md-12 order-3 order-md-3 text-right" >
-                       <div class="site-top-icons">
-                           <ul>
-                               <li>
-                                   {% if request.user.is_authenticated %}
-                                       <a href="{% url 'account_logout' %}"><span>Logout <i class="fas fa-sign-out-alt"></i></span></a>
-                                       <a href="{% url 'profile' %}"><span>Account <i class="fas fa-user"></i></span></a>
-
-                                   {% else %}
-                                       <a href="{% url 'account_login' %}"><span>Login <i
-                                               class="fas fa-sign-in-alt"></i></span></a>
-                                    <a href="{% url 'account_signup' %}"><span>Register <i
-                                               class="fas fa-sign-in-alt"></i></span></a>
-
-                                   {% endif %}
-
-
-                               </li>
-                               <li class="d-inline-block d-md-none ml-md-0">
-                                   <a href="/" class="site-menu-toggle js-menu-toggle">
-                                       <span><i class="fas fa-bars"></i></span>
-                                   </a>
-                               </li>
-                           </ul>
-                       </div>
-                   </div>
-
+           <div class="container">
+               <div class="navbar-content text-right">
+                   <ul class="navbar-menu">
+                       <li>
+                           {% if request.user.is_authenticated %}
+                               <a href="{% url 'account_logout' %}">Logout</a>
+                               <a href="{% url 'profile' %}">Account</a>
+                           {% else %}
+                               <a href="{% url 'account_login' %}">Login</a>
+                               <a href="{% url 'account_signup' %}">Register</a>
+                           {% endif %}
+                       </li>
+                   </ul>
                </div>
            </div>
        </div>
        {% include 'navbar.html' %}
-       {% if messages %}
-           {% for message in messages %}
-               <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                   <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
-                   <span class="alert-inner--text">{{ message }}</span>
-                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                       <span aria-hidden="true">&times;</span>
-                   </button>
-               </div>
-           {% endfor %}
-       {% endif %}
-
    </header>
+
+   {% if messages %}
+   <div class="messages">
+       {% for message in messages %}
+           <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+       {% endfor %}
+   </div>
+   {% endif %}
 
    {% block content %}
    {% endblock content %}
 
-   {% include 'footer.html' %}
-
 </div>
-
 
 </body>
 </html>
