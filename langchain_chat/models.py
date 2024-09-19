@@ -11,9 +11,9 @@ class Conversation(models.Model):
 
 class ChatMessage(models.Model):
     conversation = models.ForeignKey(Conversation, related_name="chat_messages", on_delete=models.CASCADE)
-    sender = models.CharField(max_length=255)  # 'user' or 'assistant'
+    sender = models.CharField(max_length=255)
     message = models.TextField()
-    is_user_message = models.BooleanField(default=False)  # New column to track user message
+    is_user_message = models.BooleanField(default=False)
     is_ai_message = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
 

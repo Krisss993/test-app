@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
+    
     <meta charset="UTF-8">
-    <title>Your Conversations</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block head_title %}Data Science{% endblock %}</title>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'react/css/main.css' %}">
 </head>
 <body>
     <h1>Your Conversations</h1>

@@ -52,7 +52,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.run_id=0
         await self.accept()
 
-        # Send a message confirming connection
         await self.send(text_data=json.dumps({
             "message": "WebSocket connected."
         }))
@@ -63,7 +62,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 
     async def receive(self, text_data):
-        # Parse the incoming message
         text_data_json = json.loads(text_data)
         
         if 'conversation_id' in text_data_json:
@@ -72,18 +70,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
         else:
             message = text_data_json['message']
             conversation = await self.get_conversation(self.conversation_id)
-            # Save the user's message to the database
             await self.save_message(conversation, self.scope["user"].username, message, is_user=True, is_ai=False)
             print('MESSAGE SAVED')
 
-            # Prepare input for the chatbot
             session_config = {
                 'configurable': {
                     'session_id': str(self.conversation_id),
                 }
             }
 
-            # Send the user's message back to the WebSocket
             await self.send(text_data=json.dumps({
                 'message': message,
                 'sender': self.scope["user"].username
@@ -96,7 +91,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 print(f'SELF RUN ID: {self.run_id}')
                 self.run_id += 1
 
-                # Stream the response from the chatbot
                 async for chunk in runnable_with_history.astream_events(
                         {
                             'message': [HumanMessage(content=message)],
@@ -122,7 +116,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
                             'run_id': self.run_id,
                         }))
 
-                # Save the full AI message to the database
                 if ai_message:
                     await self.save_message(conversation, "Assistant", ai_message, is_user=False, is_ai=True)
                     await self.send(text_data=json.dumps({
@@ -141,7 +134,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = event['message']
         sender = event['sender']
 
-        # Send the message to WebSocket
         await self.send(text_data=json.dumps({
             'message': message,
             'sender': sender
@@ -166,38 +158,32 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 @login_required
 def index(request, conversation_id=None):
-    # Get all conversations created by the user
     conversations = Conversation.objects.filter(user=request.user).order_by('-created_at')
-    # If a conversation ID is provided, get the conversation, otherwise create a new one
-    conversation = None
-    messages = []
     if conversation_id:
-        # Get the specific conversation and its messages
         conversation = get_object_or_404(Conversation, id=conversation_id, user=request.user)
-        messages = ChatMessage.objects.filter(conversation_id=conversation_id).order_by('timestamp')
-
-        # Initialize ChatMessageHistory for this conversation and populate it with messages
-        chat_history = ChatMessageHistory()
-        for message in messages:
-            if message.is_user_message:
-                chat_history.add_user_message(HumanMessage(content=message.message))
-            elif message.is_ai_message:
-                chat_history.add_ai_message(AIMessage(content=message.message))
-
-        # Store chat history in chatbotmemory
-        chatbotmemory[str(conversation_id)] = chat_history
     else:
-        # Create a new conversation if no conversation ID is provided
-        conversation = Conversation.objects.create(user=request.user)
-        return redirect('langchain_chat:chat', conversation_id=conversation.id)
-    # Pass the conversation to the template if necessary
+        if conversations.exists():
+            conversation = conversations.first()
+        else:
+            conversation = Conversation.objects.create(user=request.user)
+            return redirect('langchain_chat:chat', conversation_id=conversation.id)
+
+    messages = ChatMessage.objects.filter(conversation_id=conversation.id).order_by('timestamp')
+
+    chat_history = ChatMessageHistory()
+    for message in messages:
+        if message.is_user_message:
+            chat_history.add_user_message(HumanMessage(content=message.message))
+        elif message.is_ai_message:
+            chat_history.add_ai_message(AIMessage(content=message.message))
+
+    chatbotmemory[str(conversation.id)] = chat_history
+
     return render(request, 'langchain_chat/chat.html', {
-        'conversation': conversation, 
+        'conversation': conversation,
         'messages': messages,
         'conversations': conversations,
-        
-        })
-
+    })
 
 @login_required
 def conversation_list(request):
@@ -210,3 +196,8 @@ def delete_conversation(request, conversation_id):
     conversation = get_object_or_404(Conversation, id=conversation_id, user=request.user)
     conversation.delete()
     return redirect('langchain_chat:conversation_list')
+
+@login_required
+def create_new_chat(request):
+    new_conversation = Conversation.objects.create(user=request.user)
+    return redirect('langchain_chat:chat', conversation_id=new_conversation.id)

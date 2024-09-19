@@ -63,7 +63,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         
         await self.accept()
         
-        # Send a message confirming connection
         await self.send(text_data=json.dumps({
             "message": "WebSocket connected."
         }))
@@ -74,63 +73,52 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 
     async def receive(self, text_data):
-        # Parse the incoming message
         text_data_json = json.loads(text_data)
         
-        # Check if the message contains conversation info (sent by the client after choosing a conversation)
         if 'conversation_id' in text_data_json:
             print('CONVERSATION ID IS:',text_data_json['conversation_id'])
             self.conversation_id = text_data_json['conversation_id']
             self.chat_history = await load_chat_history_from_db(int(self.conversation_id))
             print('HISTORY LOADED')
             try:
-                # Inform the frontend that the RAG chain creation is starting
                 await self.send(text_data=json.dumps({
                     'event': 'rag_chain_start',
                     'message': 'Analyzing documents, please wait...'
                 }))
-
-                # Try to create the RAG chain
                 self.conversational_rag_chain = await sync_to_async(create_rag_chain)(self.conversation_id)
-
-                # Inform the frontend that RAG chain creation is complete
+                
                 await self.send(text_data=json.dumps({
                     'event': 'rag_chain_complete',
                     'message': 'RAG chain creation complete.'
                 }))
 
             except Exception as e:
-                # Handle errors and inform the frontend about failure
                 await self.send(text_data=json.dumps({
                     'event': 'rag_chain_error',
                     'message': 'Creating RAG chain failed, try uploading another file.'
                 }))
                 return
         else:
-
-            # Handle message from the client
             message = text_data_json['message']
             conversation = await self.get_conversation(self.conversation_id)
 
-            # Save the message to the database asynchronously
             await self.save_message(conversation, self.scope["user"].username, message, is_user=True, is_ai=False)
             print('MESSAGE SAVED')
-            # Prepare input for the chatbot
+
             session_config = {
                 'configurable': {
                 'session_id': str(self.conversation_id),
 
                 }
             }
-            
-            # Send the message back to the WebSocket (only to this connection)
+
             await self.send(text_data=json.dumps({
                 'message': message,
                 'sender': self.scope["user"].username
             }))
             print('MESSAGE SENT')
             file_count = await self.get_uploaded_file_count(self.conversation_id)
-            # Send the assistant's response
+
             if not self.conversational_rag_chain or file_count == 0:
                 await self.send(text_data=json.dumps({
                     'event': 'no_loaded_documents',
@@ -144,7 +132,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 ai_message = ""
                 try:
                     print('trying to send message to llm')
-                    # Stream the response
                     async for event in self.conversational_rag_chain.astream_events(
                             {
                                 'input':message,
@@ -171,7 +158,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
                             chunk_counter += chunk.count('.')
                             if chunk_counter >= max_chunks:
                                 break
-                                # Send the chunk to the WebSocket with proper structure
                             await self.send(text_data=json.dumps({
                                 'message': event['data']['chunk'].content,
                                 'sender': 'Assistant',
@@ -180,7 +166,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
                             }))
                             
-                    # After the full response is accumulated, save the AI message to the database
                     if ai_message:
                         await self.save_message(conversation, "Assistant", ai_message, is_user=False, is_ai=True)
                         
@@ -189,7 +174,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
                                 AIMessage(content=ai_message),
                             ])
                         print(self.chat_history)
-                        # Send the full AI message to the WebSocket
                         await self.send(text_data=json.dumps({
                                 'message': ai_message,
                                 'sender': "Assistant"
@@ -210,12 +194,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     print(f"Failed with input message: {ai_message}")
 
 
-    # Send messages to the WebSocket client
     async def chat_message(self, event):
         message = event['message']
         sender = event['sender']
 
-        # Send the message to WebSocket
         await self.send(text_data=json.dumps({
             'message': message,
             'sender': sender
@@ -255,7 +237,6 @@ def index(request, conversation_id=None):
     messages = []
     uploaded_files_counter = 0
 
-    # Get all conversations created by the user
     conversations = Conversation.objects.filter(user=request.user).order_by('-created_at')
 
     if conversation_id:
@@ -272,14 +253,13 @@ def index(request, conversation_id=None):
             )
             file.save()
 
-        # After uploading the file, update the RAG chain if the file count changes
         print(uploaded_files_counter, previous_uploaded_files_counter)
         if uploaded_files_counter != previous_uploaded_files_counter:
             try:
                 print('Creating rag chain')
                 print(conversation_id)
-                create_rag_chain(conversation_id)  # Trigger RAG chain creation
-                previous_uploaded_files_counter = uploaded_files_counter  # Update the file count
+                create_rag_chain(conversation_id)
+                previous_uploaded_files_counter = uploaded_files_counter
                 print('rag chain created')
             except Exception as e:
                 return render(request, 'langchain_stream/chat.html', {
@@ -292,7 +272,6 @@ def index(request, conversation_id=None):
 
             return redirect('langchain_stream:chat', conversation_id=conversation.id)
 
-        # If no uploaded files exist, render without RAG chain creation
         if not uploaded_files.exists():
             return render(request, 'langchain_stream/chat.html', {
                 'docs_messages': messages,
@@ -301,11 +280,13 @@ def index(request, conversation_id=None):
             })
 
     else:
-        # If no conversation exists, create a new one and redirect
-        conversation = Conversation.objects.create(user=request.user)
-        return redirect('langchain_stream:chat', conversation_id=conversation.id)
+        if conversations.exists():
+            conversation = conversations.first()
+            return redirect('langchain_stream:chat', conversation_id=conversation.id)
+        else:
+            conversation = Conversation.objects.create(user=request.user)
+            return redirect('langchain_stream:chat', conversation_id=conversation.id)
 
-    # Render the page with the conversations and messages
     return render(request, 'langchain_stream/chat.html', {
         'conversation': conversation, 
         'docs_messages': messages,
@@ -313,6 +294,12 @@ def index(request, conversation_id=None):
         'uploaded_files': uploaded_files
     })
     
+@login_required
+def create_new_chat(request):
+    new_conversation = Conversation.objects.create(user=request.user)
+    
+    return redirect('langchain_stream:chat', conversation_id=new_conversation.id)
+
 
 def load_files_for_conversation(conversation_id):
     """Load all files associated with the conversation."""
@@ -330,7 +317,7 @@ def load_files_for_conversation(conversation_id):
         else:
             print('Not supported file format')
             continue
-        docs.extend(loader.load())  # Load and add the document content
+        docs.extend(loader.load())
     print(len(docs))
     return docs
 
@@ -356,7 +343,6 @@ def create_rag_chain(conversation_id):
     llm = ChatGroq()
     print('llm initialized')
 
-    ### Contextualize question ###
     contextualize_q_system_prompt = (
         "Given a chat history and the latest user question "
         "which might reference context in the chat history, "
@@ -436,7 +422,6 @@ def upload_file(request, conversation_id):
     if request.method == 'POST':
         file = request.FILES.get('file')
 
-        # Validate file type
         if file:
             valid_extensions = ['.pdf', '.txt']
             ext = os.path.splitext(file.name)[1].lower()
@@ -444,7 +429,6 @@ def upload_file(request, conversation_id):
                 messages.error(request, "Invalid file type. Only .pdf and .txt files are allowed.")
                 return redirect('langchain_stream:chat', conversation_id=conversation_id)
 
-            # Save the file if valid
             uploaded_file = UploadedFile.objects.create(user=request.user, conversation=conversation, file=file)
             uploaded_file.save()
             messages.success(request, "File uploaded successfully.")

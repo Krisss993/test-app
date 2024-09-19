@@ -2,21 +2,23 @@
 <html lang="en">
 <head>
     {% load static %}
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StreamLangchain</title>
+    <title> {% block head_title %}Data Science{% endblock %}</title>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'react/css/main.css' %}">
 </head>
 <body>
     <div class="container">
         <!-- Sidebar for listing chats and filtering -->
-         <!-- Sidebar for listing chats and filtering -->
         <button class="toggle-sidebar-btn" id="toggle-sidebar-btn">Show Conversations</button>
         <div class="sidebar" id="sidebar">
             <a href="{% url 'home' %}" class="">Home Page</a>
             <a href="{% url 'langchain_chat:chat'%}" class="">Chatbot</a>
             <h2>Your Conversations</h2>
-            <button id="new-chat-btn">New Chat</button>
+            <a href="{% url 'langchain_stream:create_new_chat' %}" class="btn btn-primary" id="new-chat-btn">New Chat</a>
+
             <ul class="conversation-list">
                 {% for conv in conversations %}
                     <li>

@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     {% load static %}
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StreamLangchain</title>
+    <title> {% block head_title %}Data Science{% endblock %}</title>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'react/css/main.css' %}">
 </head>
 <body>
@@ -16,7 +18,8 @@
             <a href="{% url 'home' %}" class="">Home Page</a>
             <a href="{% url 'langchain_stream:chat' %}" class="">Document Analyzer</a>
             <h2>Your Conversations</h2>
-            <button id="new-chat-btn">New Chat</button>
+            <a href="{% url 'langchain_chat:create_new_chat' %}" class="btn btn-primary" id="new-chat-btn">New Chat</a>
+
             <ul class="conversation-list">
                 {% for conv in conversations %}
                     <li>
@@ -102,10 +105,6 @@
 
 
 
-
-
-
-
         // Delete button functionality
         function setupDeleteButtons() {
             const deleteButtons = document.querySelectorAll('.delete-btn');
@@ -155,25 +154,6 @@
                 reconnectAttempts = 0;
             };
 
-            // ws.onmessage = function(event) {
-            //     const data = JSON.parse(event.data);
-            //     const sender = data.sender || "Assistant"; 
-            //     const message = data.message || "";
-            //     console.log("Message from server:", data.message);
-                
-            //     if (data.event === 'on_chat_model_start') {
-            //         // When the AI message starts, reset the ongoing stream content
-            //         ongoingStream = { id: data.run_id, content: '' };
-            //         responses.push({ sender: sender, message: '', id: data.run_id });
-            //         renderMessages();
-            //     } else if (data.event === 'on_chat_model_stream' && ongoingStream && data.run_id === ongoingStream.id) {
-            //         // Append chunks of AI message to the ongoing stream content
-            //         ongoingStream.content += data.message;
-            //         responses = responses.map(msg => msg.id === data.run_id ? { ...msg, message: ongoingStream.content } : msg);
-            //         renderMessages();
-            //     }
-            // };
-
             ws.onmessage = function(event) {
                 const data = JSON.parse(event.data);
                 const sender = data.sender || "Assistant"; 
@@ -203,9 +183,6 @@
                     renderMessages();
                 }
             };
-
-
-
 
 
             ws.onerror = function(event) {
