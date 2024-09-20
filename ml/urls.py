@@ -51,4 +51,13 @@ urlpatterns = [
     path('unsuperv-prep/', views.render_prep_reg, name='prep-reg'),
     path('notebook-prep-reg/', views.notebook_prep_reg, name='notebook-prep-reg'),
 
+    path('eval-ksn/', views.render_eval_ksn, name='eval-ksn'),
+    path('notebook-eval-ksn/', views.notebook_eval_ksn, name='notebook-eval-ksn'),
+
+    path('model-ksn/', views.render_model_ksn, name='model-ksn'),
+    path('notebook-model-ksn/', views.notebook_model_ksn, name='notebook-model-ksn'),
+
+    path('prep-ksn/', views.render_prep_ksn, name='prep-ksn'),
+    path('notebook-prep-ksn/', views.notebook_prep_ksn, name='notebook-prep-ksn'),
+
 ]

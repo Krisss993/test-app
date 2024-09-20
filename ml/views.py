@@ -166,3 +166,36 @@ def notebook_prep_reg(request):
     with open(notebook_file_path, 'r', encoding='utf-8') as f:
         notebook_html = f.read()
     return HttpResponse(notebook_html)
+
+
+def render_prep_ksn(request):
+    return render(request, 'ml/ksn/prep.html')
+
+def notebook_prep_ksn(request):
+    # Serve the notebook HTML file
+    notebook_file_path = os.path.join('static', 'notebooks/KSN_prep.html')
+    with open(notebook_file_path, 'r', encoding='utf-8') as f:
+        notebook_html = f.read()
+    return HttpResponse(notebook_html)
+
+
+def render_model_ksn(request):
+    return render(request, 'ml/ksn/model.html')
+
+def notebook_model_ksn(request):
+    # Serve the notebook HTML file
+    notebook_file_path = os.path.join('static', 'notebooks/KSN_model.html')
+    with open(notebook_file_path, 'r', encoding='utf-8') as f:
+        notebook_html = f.read()
+    return HttpResponse(notebook_html)
+
+
+def render_eval_ksn(request):
+    return render(request, 'ml/ksn/eval.html')
+
+def notebook_eval_ksn(request):
+    # Serve the notebook HTML file
+    notebook_file_path = os.path.join('static', 'notebooks/KSN_eval.html')
+    with open(notebook_file_path, 'r', encoding='utf-8') as f:
+        notebook_html = f.read()
+    return HttpResponse(notebook_html)
