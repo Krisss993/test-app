@@ -11,35 +11,25 @@
 }
 
 /* General body styles */
-body {
+html, body {
     margin: 0;
+    padding: 0;
     font-family: Source Sans Pro, sans-serif;
     font-weight: 400;
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--background-color);
-    padding: 20;
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    overflow: auto;
-    overflow-x: hidden;
+    min-height: 100vh; /* Minimum height to cover the entire viewport */
+    overflow-x: hidden; /* Disable horizontal scrolling */
 }
 
 /* Main container layout with sidebar and content side by side */
-.container {
-    display: flex;
-    flex-direction: row;
-    width: 80%;
-    background-color: var(--background-color);
-}
-
-/* Container for the sidebar and main content */
 .container-wrapper {
     display: flex;
     flex-direction: row;
-    flex-grow: 1; /* Ensures that it grows to fill available space */
-    margin-top: 0;
+    flex-grow: 1;
+    width: 100%;
+    background-color: var(--background-color);
 }
 
 /* Main content section */
@@ -48,6 +38,7 @@ body {
     padding: 20px;
     background-color: var(--background-color);
     box-sizing: border-box;
+    overflow-y: auto; /* Allow content scrolling if overflow occurs */
 }
 
 /* Navbar styling */
@@ -55,7 +46,7 @@ body {
     width: 100%;
     background-color: var(--background-color);
     padding: 10px 0;
-    position: sticky;
+    position: relative;
     top: 0;
     z-index: 100;
 }
@@ -63,7 +54,7 @@ body {
 .site-wrap {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100vh; /* Ensure it covers the viewport height */
 }
 
 /* Sidebar styles */
@@ -105,8 +96,6 @@ body {
 .sidebar-content a:hover {
     background-color: var(--hover-bg-color);
 }
-
-
 
 /* Adjust the h2 and h5 for better spacing */
 h2.h3 {

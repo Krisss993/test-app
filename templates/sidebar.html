@@ -2,12 +2,11 @@
     <div class="sidebar-content">
         <h3>Convolutional Neural Networks (CNNs)</h3>
         <ul>
-            <li><a href="#">Data preparation and exploration</a></li>
-            <li><a href="#">Data augmentation</a></li>
-            <li><a href="#">Model Architecture</a></li>
-            <li><a href="#">Evaluation</a></li>
-            <li><a href="#">Summary</a></li>
+            <li><a href="{% url 'ml:prep-ksn' %}">Data preparation, exploration and augmentation</a></li>
+            <li><a href="{% url 'ml:model-ksn' %}">Model Architecture</a></li>
+            <li><a href="{% url 'ml:eval-ksn' %}">Evaluation and summary</a></li>
         </ul>
+        
         <h3> Supervised learning - classification</h3>
         <ul>
             <li><a href="{% url 'ml:data_preparation' %}">Data preparation and exploration</a></li>
@@ -42,6 +41,7 @@
             <li><a href="#">LOCAL OUTLIER FACTOR(TODO)</a></li>
         </ul>
 
+        
         <h3>Generative Adversarial Networks (GANs)</h3>
         <ul>
             <li><a href="#">Hyperparameters and parameters(TODO)</a></li>
