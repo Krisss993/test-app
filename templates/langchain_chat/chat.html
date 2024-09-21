@@ -4,7 +4,7 @@
     {% load static %}
     
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title> {% block head_title %}Data Science{% endblock %}</title>
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'react/css/main.css' %}">
@@ -146,7 +146,7 @@
 
         // Setup WebSocket connection
         function setupWebSocket() {
-            ws = new WebSocket('wss://test-app-y0lp.onrender.com/ws/chat/');
+            ws = new WebSocket('ws://127.0.0.1:8000/ws/chat/');
 
             ws.onopen = function() {
                 ws.send(JSON.stringify({ 'conversation_id': conversationId }));

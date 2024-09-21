@@ -201,6 +201,8 @@ button:focus, button:focus-visible {
 @media (max-width: 768px) {
     .container {
         flex-direction: column; /* Stack the sidebar on top of the chat-container */
+        height: 100vh; /* Ensures it fills the full height */
+        width: 100vw;  /* Ensures it fills the full width */
     }
 
     /* Hide sidebar initially */
@@ -253,6 +255,20 @@ button:focus, button:focus-visible {
     .toggle-sidebar-btn:hover {
         background-color: #5b6eab;
     }
+
+    .message {
+        max-width: 90%; /* Change from 60% to 100% */
+        margin-bottom: 10px;
+        padding: 1rem;
+        border-radius: 10px;
+        font-size: 1rem;
+        word-wrap: break-word;
+    }
+
+    .messages-container {
+        padding: 5px;
+    }
+
 }
 
 /* Hide the toggle button on larger screens */
