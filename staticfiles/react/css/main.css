@@ -201,17 +201,19 @@ button:focus, button:focus-visible {
     html, body {
         margin: 0;
         padding: 0;
-        height: 100%; /* Full height of the viewport */
+        height: 80%; /* Full height of the viewport */
         overflow: hidden; /* Disable scrolling on the entire page */
+        padding-bottom: 20%;
     }
 
 
     .container {
         flex-direction: column; /* Stack the sidebar on top of the chat-container */
-        height: 100vh; /* Ensures it fills the full height */
+        height: 80vh; /* Ensures it fills the full height */
         width: 100vw;  /* Ensures it fills the full width */
         overflow: hidden;
         flex-grow: 1;
+
     }
 
     /* Hide sidebar initially */
@@ -236,6 +238,7 @@ button:focus, button:focus-visible {
         width: 100%;
         flex-grow: 1;
         padding: 1rem;
+        overflow: hidden;
     }
 
     .input-form {

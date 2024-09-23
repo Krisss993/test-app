@@ -181,3 +181,5 @@ ACCOUNT_SIGNUP_REDIRECT_URL = '/profile/'
 #    SECURE_SSL_REDIRECT = True
 #    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDER_PROTO', 'https')
 #    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'

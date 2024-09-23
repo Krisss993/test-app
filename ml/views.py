@@ -1,7 +1,7 @@
 from django.shortcuts import render
 import os
 from django.http import HttpResponse
-
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 def render_prep(request):
     return render(request, 'ml/superv_class/data_preparation.html')
@@ -199,3 +199,28 @@ def notebook_eval_ksn(request):
     with open(notebook_file_path, 'r', encoding='utf-8') as f:
         notebook_html = f.read()
     return HttpResponse(notebook_html)
+
+@xframe_options_exempt
+def render_dbagglokm(request):
+    return render(request, 'ml/unsuperv/dbagglokm.html')
+
+@xframe_options_exempt
+def notebook_dbagglokm(request):
+    # Serve the notebook HTML file
+    notebook_file_path = os.path.join('static', 'notebooks/DBclustKM.html')
+    with open(notebook_file_path, 'r', encoding='utf-8') as f:
+        notebook_html = f.read()
+    return HttpResponse(notebook_html)
+
+@xframe_options_exempt
+def serve_chart(request):
+    # Assuming the chart is located in 'static/notebooks/charts/'
+    chart_file_path = os.path.join('static', 'notebooks', 'charts', 'KMclustDB.html')
+
+    try:
+        with open(chart_file_path, 'r', encoding='utf-8') as f:
+            chart_html = f.read()
+        return HttpResponse(chart_html)
+    except FileNotFoundError:
+        return HttpResponse("Chart not found", status=404)
+    
