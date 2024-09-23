@@ -1,0 +1,129 @@
+:root {
+    --text-color: rgb(236, 236, 236);
+    --background-color: rgb(33, 33, 33);
+    --input-padding: 10px;
+    --button-padding: 10px 20px;
+    --sidebar-bg-color: #2c2f33;
+    --link-bg-color: #23272a;
+    --hover-bg-color: #7289da;
+    --button-bg-color: #7289da;
+    --button-hover-bg-color: #5b6eab;
+}
+
+/* General body styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Source Sans Pro, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    min-height: 100vh; /* Minimum height to cover the entire viewport */
+    overflow-x: hidden; /* Disable horizontal scrolling */
+}
+
+/* Main container layout with sidebar and content side by side */
+.container-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    width: 100%;
+    background-color: var(--background-color);
+}
+
+/* Main content section */
+.content-section {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: var(--background-color);
+    box-sizing: border-box;
+    overflow-y: auto; /* Allow content scrolling if overflow occurs */
+}
+
+/* Navbar styling */
+.site-navbar {
+    width: 100%;
+    background-color: var(--background-color);
+    padding: 10px 0;
+    position: relative;
+    top: 0;
+    z-index: 100;
+}
+
+.site-wrap {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure it covers the viewport height */
+}
+
+/* Sidebar styles */
+.sidebar-container {
+    width: 250px;
+    background-color: var(--sidebar-bg-color);
+    padding: 20px;
+    flex-shrink: 0;
+    min-width: 250px;
+    box-sizing: border-box;
+}
+
+/* Sidebar headings */
+.sidebar-content h3 {
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+/* Sidebar list */
+.sidebar-content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-content li {
+    margin-bottom: 10px;
+}
+
+.sidebar-content a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    background-color: var(--link-bg-color);
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-content a:hover {
+    background-color: var(--hover-bg-color);
+}
+
+/* Adjust the h2 and h5 for better spacing */
+h2.h3 {
+    color: var(--text-color);
+}
+
+h5.h5 {
+    color: var(--text-color);
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+/* Image container */
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive layout: move sidebar to top on smaller screens */
+@media (max-width: 768px) {
+    .container-wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar-container {
+        width: 100%;
+        order: -1; /* Sidebar will move above the main content */
+    }
+}
