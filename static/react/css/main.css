@@ -22,7 +22,6 @@ body {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-font-smoothing: auto;
     display: flex;
-    min-width: 320px;
     min-height: 100vh;
 }
 
@@ -208,9 +207,10 @@ button:focus, button:focus-visible {
     /* Hide sidebar initially */
     .sidebar {
         width: 100%;              /* Full width on mobile */
-        max-height: 0;             /* Hidden by default (collapsed) */
+        max-height: 0px;             /* Hidden by default (collapsed) */
         overflow: hidden;          /* Prevent content from being visible */
         transform: translateY(-100%); /* Sidebar hidden by default (folded up) */
+        padding: 0;
     }
 
     /* Sidebar expanded state */
@@ -257,7 +257,7 @@ button:focus, button:focus-visible {
     }
 
     .message {
-        max-width: 90%; /* Change from 60% to 100% */
+        max-width: 90%; 
         margin-bottom: 10px;
         padding: 1rem;
         border-radius: 10px;
@@ -267,6 +267,7 @@ button:focus, button:focus-visible {
 
     .messages-container {
         padding: 5px;
+        flex-grow: 0.9;
     }
 
 }
