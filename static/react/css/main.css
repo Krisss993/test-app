@@ -210,7 +210,7 @@ button:focus, button:focus-visible {
         max-height: 0px;             /* Hidden by default (collapsed) */
         overflow: hidden;          /* Prevent content from being visible */
         transform: translateY(-100%); /* Sidebar hidden by default (folded up) */
-        padding: 0;
+        padding: 0px;
     }
 
     /* Sidebar expanded state */
