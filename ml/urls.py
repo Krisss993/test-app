@@ -62,5 +62,5 @@ urlpatterns = [
 
     path('db-agglo-km/', views.render_dbagglokm, name='db-agglo-km'),
     path('notebook-db-agglo-km/', views.notebook_dbagglokm, name='notebook-db-agglo-km'),
-    path('charts-KMclustDB/', views.serve_chart, name='charts-KMclustDB'),
+
 ]
