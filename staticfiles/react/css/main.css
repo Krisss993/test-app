@@ -209,7 +209,7 @@ button:focus, button:focus-visible {
 
     .container {
         flex-direction: column; /* Stack the sidebar on top of the chat-container */
-        height: 80vh; /* Ensures it fills the full height */
+        height: 90vh; /* Ensures it fills the full height */
         width: 100vw;  /* Ensures it fills the full width */
         overflow: hidden;
         flex-grow: 1;
