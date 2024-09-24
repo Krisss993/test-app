@@ -212,5 +212,14 @@ def notebook_dbagglokm(request):
     return HttpResponse(notebook_html)
 
 
+def render_pca(request):
+    return render(request, 'ml/unsuperv/pca.html')
 
-    
+
+def notebook_pca(request):
+    # Serve the notebook HTML file
+    notebook_file_path = os.path.join('static', 'notebooks/PCA.html')
+    with open(notebook_file_path, 'r', encoding='utf-8') as f:
+        notebook_html = f.read()
+    return HttpResponse(notebook_html)
+

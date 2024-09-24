@@ -67,4 +67,7 @@ urlpatterns = [
     path('charts-KMclustDB2/', chart_views.serve_chart2, name='charts-KMclustDB2'),
     path('charts-KMclustDB3/', chart_views.serve_chart3, name='charts-KMclustDB3'),
     path('charts-KMclustDB4/', chart_views.serve_chart4, name='charts-KMclustDB4'),
+
+    path('pca/', views.render_pca, name='pca'),
+    path('notebook-pca/', views.notebook_pca, name='notebook-pca'),
 ]

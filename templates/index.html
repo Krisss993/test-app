@@ -10,10 +10,20 @@
     <!-- Main content area -->
     <div class="main-content" style="padding: 20px;">
         <h2 class="h3 mb-3 text-black">Data Science</h2>
-
+        <h4 class="h3 mb-3 text-black">
+            This page is dedicated to the exploration of Machine Learning 
+            and Artificial Intelligence. It aims to provide insightful resources
+              in these transformative technologies.
+              Here you can see implementations of various methodologies, 
+              including supervised and unsupervised learning algorithms that power modern applications. 
+              Explore the world of Convolutional Neural Networks, 
+              which are revolutionizing image recognition and processing, 
+              as well as Generative Adversarial Networks (GANs) that are pushing
+               the boundaries of creativity and innovation in synthetic data generation.
+            </h4>
         <!-- Image section -->
         <div class="image-container">
-            <img src="{% static 'images/sp3D.jpg' %}" alt="Data Science" class="img-fluid mt-4">
+            {{ plot_div|safe }}
         </div>
 
         <!-- Text content -->
@@ -29,6 +39,8 @@
                 A lack of diversity in the data can also lead to incorrect conclusions
                 and an incomplete understanding of real-world relationships, 
                 which negatively impacts the model's performance.
+
+
             </h5>
         </div>
     </div>
