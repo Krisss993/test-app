@@ -37,14 +37,14 @@
             <li><a href="{% url 'ml:pca' %}">PCA</a></li>
             <li><a href="{% url 'ml:tsne' %}">TSNE</a></li>
             <li><a href="{% url 'ml:apriori' %}">APRIORI</a></li>
-            <li><a href="{% url 'ml:forest' %}">ISOLATION FOREST</a></li>
-            <li><a href="#">LOCAL OUTLIER FACTOR(TODO)</a></li>
+            <li><a href="{% url 'ml:isoforest' %}">ISOLATION FOREST</a></li>
+            <li><a href="{% url 'ml:lof' %}">LOCAL OUTLIER FACTOR</a></li>
         </ul>
 
         
         <h3>Generative Adversarial Networks (GANs)</h3>
         <ul>
-            <li><a href="#">Hyperparameters and parameters(TODO)</a></li>
+            <li><a href="{% url 'ml:gan-param' %}">Hyperparameters and parameters(TODO)</a></li>
             <li><a href="#">Generator model(TODO)</a></li>
             <li><a href="#">Gradient Penalty Calculation(TODO)</a></li>
             <li><a href="#">Training(TODO)</a></li>

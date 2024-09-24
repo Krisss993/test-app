@@ -30,7 +30,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Use AJAX to fetch the notebook HTML and inject it into the div
-        fetch("{% url 'ml:notebook-forest' %}")
+        fetch("{% url 'ml:notebook-isoforest' %}")
             .then(response => response.text())
             .then(html => {
                 document.getElementById('notebook-container').innerHTML = html;

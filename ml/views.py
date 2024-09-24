@@ -244,14 +244,34 @@ def notebook_apriori(request):
     return HttpResponse(notebook_html)
 
 
-def render_forest(request):
+def render_isoforest(request):
     return render(request, 'ml/unsuperv/forest.html')
 
-def notebook_forest(request):
+def notebook_isoforest(request):
     # Serve the notebook HTML file
-    notebook_file_path = os.path.join('static', 'notebooks/forest.html')
+    notebook_file_path = os.path.join('static', 'notebooks/isoforest.html')
     with open(notebook_file_path, 'r', encoding='utf-8') as f:
         notebook_html = f.read()
     return HttpResponse(notebook_html)
 
 
+def render_lof(request):
+    return render(request, 'ml/unsuperv/lof.html')
+
+def notebook_lof(request):
+    # Serve the notebook HTML file
+    notebook_file_path = os.path.join('static', 'notebooks/lof.html')
+    with open(notebook_file_path, 'r', encoding='utf-8') as f:
+        notebook_html = f.read()
+    return HttpResponse(notebook_html)
+
+
+def render_gan_param(request):
+    return render(request, 'ml/gan/gan-param.html')
+
+def notebook_gan_param(request):
+    # Serve the notebook HTML file
+    notebook_file_path = os.path.join('static', 'notebooks/GAN.html')
+    with open(notebook_file_path, 'r', encoding='utf-8') as f:
+        notebook_html = f.read()
+    return HttpResponse(notebook_html)

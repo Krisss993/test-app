@@ -84,7 +84,13 @@ urlpatterns = [
     path('apriori/', views.render_apriori, name='apriori'),
     path('notebook-apriori/', views.notebook_apriori, name='notebook-apriori'),
 
-    path('forest/', views.render_forest, name='forest'),
-    path('notebook-forest/', views.notebook_forest, name='notebook-forest'),
+    path('isoforest/', views.render_isoforest, name='isoforest'),
+    path('notebook-isoforest/', views.notebook_isoforest, name='notebook-isoforest'),
+
+    path('lof/', views.render_lof, name='lof'),
+    path('notebook-lof/', views.notebook_lof, name='notebook-lof'),
+
+    path('gan-param/', views.render_gan_param, name='gan-param'),
+    path('notebook-gan-param/', views.notebook_gan_param, name='notebook-gan-param'),
 
 ]
