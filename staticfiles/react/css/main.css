@@ -202,7 +202,7 @@ button:focus, button:focus-visible {
         margin: 0;
         padding: 0;
         height: 80%; /* Full height of the viewport */
-        overflow: hidden; /* Disable scrolling on the entire page */
+        overflow-x: hidden; /* Disable scrolling on the entire page */
         padding-bottom: 5%;
     }
 
@@ -211,7 +211,7 @@ button:focus, button:focus-visible {
         flex-direction: column; /* Stack the sidebar on top of the chat-container */
         height: 90vh; /* Ensures it fills the full height */
         width: 100vw;  /* Ensures it fills the full width */
-        overflow: hidden;
+        overflow-x: hidden;
         flex-grow: 1;
 
     }
