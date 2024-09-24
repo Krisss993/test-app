@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from . import chart_views
 
 app_name = 'ml'
 
@@ -62,5 +63,8 @@ urlpatterns = [
 
     path('db-agglo-km/', views.render_dbagglokm, name='db-agglo-km'),
     path('notebook-db-agglo-km/', views.notebook_dbagglokm, name='notebook-db-agglo-km'),
-
+    path('charts-KMclustDB/', chart_views.serve_chart1, name='charts-KMclustDB'),
+    path('charts-KMclustDB2/', chart_views.serve_chart2, name='charts-KMclustDB2'),
+    path('charts-KMclustDB3/', chart_views.serve_chart3, name='charts-KMclustDB3'),
+    path('charts-KMclustDB4/', chart_views.serve_chart4, name='charts-KMclustDB4'),
 ]

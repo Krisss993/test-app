@@ -26,16 +26,35 @@
         </div>
     </div>
 
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     // Use AJAX to fetch the notebook HTML and inject it into the div
+    //     fetch("{% url 'ml:notebook-db-agglo-km' %}")
+    //         .then(response => response.text())
+    //         .then(html => {
+    //             document.getElementById('notebook-container').innerHTML = html;
+
+    //             // Apply dark theme CSS after notebook is loaded
+    //             applyDarkTheme();
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching notebook HTML:', error);
+    //         });
+    // });
     document.addEventListener('DOMContentLoaded', function() {
         // Use AJAX to fetch the notebook HTML and inject it into the div
         fetch("{% url 'ml:notebook-db-agglo-km' %}")
             .then(response => response.text())
             .then(html => {
+                // Inject the HTML into the notebook container
                 document.getElementById('notebook-container').innerHTML = html;
 
                 // Apply dark theme CSS after notebook is loaded
                 applyDarkTheme();
+
+                // Re-run Plotly rendering scripts after the notebook is loaded
+                renderPlotly();
             })
             .catch(error => {
                 console.error('Error fetching notebook HTML:', error);
@@ -117,6 +136,15 @@
 
         `;
         document.head.appendChild(style);
+    }
+    function renderPlotly() {
+        // Re-run Plotly's plots by finding all divs with Plotly data
+        const plotlyDivs = document.querySelectorAll('.plotly-graph-div');
+        plotlyDivs.forEach(function (div) {
+            const plotData = JSON.parse(div.dataset.plotData);
+            const layout = JSON.parse(div.dataset.plotLayout);
+            Plotly.newPlot(div, plotData, layout);
+        });
     }
 </script>
 {% endblock content %}

@@ -1,7 +1,6 @@
 from django.shortcuts import render
 import os
 from django.http import HttpResponse
-from django.views.decorators.clickjacking import xframe_options_exempt
 
 def render_prep(request):
     return render(request, 'ml/superv_class/data_preparation.html')
@@ -211,3 +210,7 @@ def notebook_dbagglokm(request):
     with open(notebook_file_path, 'r', encoding='utf-8') as f:
         notebook_html = f.read()
     return HttpResponse(notebook_html)
+
+
+
+    
