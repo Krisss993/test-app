@@ -231,3 +231,27 @@ def notebook_tsne(request):
     with open(notebook_file_path, 'r', encoding='utf-8') as f:
         notebook_html = f.read()
     return HttpResponse(notebook_html)
+
+
+def render_apriori(request):
+    return render(request, 'ml/unsuperv/apriori.html')
+
+def notebook_apriori(request):
+    # Serve the notebook HTML file
+    notebook_file_path = os.path.join('static', 'notebooks/apriori.html')
+    with open(notebook_file_path, 'r', encoding='utf-8') as f:
+        notebook_html = f.read()
+    return HttpResponse(notebook_html)
+
+
+def render_forest(request):
+    return render(request, 'ml/unsuperv/forest.html')
+
+def notebook_forest(request):
+    # Serve the notebook HTML file
+    notebook_file_path = os.path.join('static', 'notebooks/forest.html')
+    with open(notebook_file_path, 'r', encoding='utf-8') as f:
+        notebook_html = f.read()
+    return HttpResponse(notebook_html)
+
+

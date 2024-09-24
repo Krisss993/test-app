@@ -80,4 +80,11 @@ urlpatterns = [
     path('charts-tsne5/', chart_views.serve_chart_tsne5, name='charts-tsne5'),
     path('charts-tsne6/', chart_views.serve_chart_tsne6, name='charts-tsne6'),
     path('charts-tsne7/', chart_views.serve_chart_tsne7, name='charts-tsne7'),
+
+    path('apriori/', views.render_apriori, name='apriori'),
+    path('notebook-apriori/', views.notebook_apriori, name='notebook-apriori'),
+
+    path('forest/', views.render_forest, name='forest'),
+    path('notebook-forest/', views.notebook_forest, name='notebook-forest'),
+
 ]
