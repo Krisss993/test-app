@@ -203,7 +203,6 @@ def notebook_eval_ksn(request):
 def render_dbagglokm(request):
     return render(request, 'ml/unsuperv/dbagglokm.html')
 
-
 def notebook_dbagglokm(request):
     # Serve the notebook HTML file
     notebook_file_path = os.path.join('static', 'notebooks/DBclustKM.html')
@@ -215,7 +214,6 @@ def notebook_dbagglokm(request):
 def render_pca(request):
     return render(request, 'ml/unsuperv/pca.html')
 
-
 def notebook_pca(request):
     # Serve the notebook HTML file
     notebook_file_path = os.path.join('static', 'notebooks/PCA.html')
@@ -223,3 +221,13 @@ def notebook_pca(request):
         notebook_html = f.read()
     return HttpResponse(notebook_html)
 
+
+def render_tsne(request):
+    return render(request, 'ml/unsuperv/tsne.html')
+
+def notebook_tsne(request):
+    # Serve the notebook HTML file
+    notebook_file_path = os.path.join('static', 'notebooks/tsne.html')
+    with open(notebook_file_path, 'r', encoding='utf-8') as f:
+        notebook_html = f.read()
+    return HttpResponse(notebook_html)

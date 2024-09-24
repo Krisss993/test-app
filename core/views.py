@@ -16,7 +16,7 @@ class HomeView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        plotly_html_file_path = os.path.join(settings.STATIC_ROOT, 'notebooks/charts/PCA3dplot.html')
+        plotly_html_file_path = os.path.join(settings.STATIC_ROOT, 'notebooks/charts/tsne3comp.html')
 
         with open(plotly_html_file_path, 'r') as file:
             plot_div = file.read()

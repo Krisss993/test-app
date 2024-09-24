@@ -70,4 +70,14 @@ urlpatterns = [
 
     path('pca/', views.render_pca, name='pca'),
     path('notebook-pca/', views.notebook_pca, name='notebook-pca'),
+
+    path('tsne/', views.render_tsne, name='tsne'),
+    path('notebook-tsne/', views.notebook_tsne, name='notebook-tsne'),
+    path('charts-tsne1/', chart_views.serve_chart_tsne1, name='charts-tsne1'),
+    path('charts-tsne2/', chart_views.serve_chart_tsne2, name='charts-tsne2'),
+    path('charts-tsne3/', chart_views.serve_chart_tsne3, name='charts-tsne3'),
+    path('charts-tsne4/', chart_views.serve_chart_tsne4, name='charts-tsne4'),
+    path('charts-tsne5/', chart_views.serve_chart_tsne5, name='charts-tsne5'),
+    path('charts-tsne6/', chart_views.serve_chart_tsne6, name='charts-tsne6'),
+    path('charts-tsne7/', chart_views.serve_chart_tsne7, name='charts-tsne7'),
 ]
