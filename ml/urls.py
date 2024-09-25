@@ -93,4 +93,10 @@ urlpatterns = [
     path('gan-param/', views.render_gan_param, name='gan-param'),
     path('notebook-gan-param/', views.notebook_gan_param, name='notebook-gan-param'),
 
+    path('gan-gp/', views.render_gan_gp, name='gan-gp'),
+    path('notebook-gan-gp/', views.notebook_gan_gp, name='notebook-gan-gp'),
+
+    path('gan-loop/', views.render_gan_loop, name='gan-loop'),
+    path('notebook-gan-loop/', views.notebook_gan_loop, name='notebook-gan-loop'),
+
 ]

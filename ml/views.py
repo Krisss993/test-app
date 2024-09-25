@@ -271,7 +271,29 @@ def render_gan_param(request):
 
 def notebook_gan_param(request):
     # Serve the notebook HTML file
-    notebook_file_path = os.path.join('static', 'notebooks/GAN.html')
+    notebook_file_path = os.path.join('static', 'notebooks/GAN_models.html')
+    with open(notebook_file_path, 'r', encoding='utf-8') as f:
+        notebook_html = f.read()
+    return HttpResponse(notebook_html)
+
+
+def render_gan_gp(request):
+    return render(request, 'ml/gan/gan-gp.html')
+
+def notebook_gan_gp(request):
+    # Serve the notebook HTML file
+    notebook_file_path = os.path.join('static', 'notebooks/GAN_gp.html')
+    with open(notebook_file_path, 'r', encoding='utf-8') as f:
+        notebook_html = f.read()
+    return HttpResponse(notebook_html)
+
+
+def render_gan_loop(request):
+    return render(request, 'ml/gan/gan-loop.html')
+
+def notebook_gan_loop(request):
+    # Serve the notebook HTML file
+    notebook_file_path = os.path.join('static', 'notebooks/GAN_loop.html')
     with open(notebook_file_path, 'r', encoding='utf-8') as f:
         notebook_html = f.read()
     return HttpResponse(notebook_html)
