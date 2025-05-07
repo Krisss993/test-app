@@ -30,7 +30,7 @@ def get_session_history(session_id: str) -> BaseChatMessageHistory:
         chatbotmemory[session_id] = ChatMessageHistory()
     return chatbotmemory[session_id]    
 
-llm = ChatGroq(model="llama-3.3-70b-versatile")
+llm = ChatGroq()
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a helpful assistant."),
