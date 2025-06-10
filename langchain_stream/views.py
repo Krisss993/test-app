@@ -340,7 +340,7 @@ def process_files_for_conversation(conversation_id):
 def create_rag_chain(conversation_id):
     print('Starting')
     """Create a RAG chain for the conversation."""
-    llm = ChatGroq()
+    llm = ChatGroq(model='mixtral-8x7b-32768')
     print('llm initialized')
 
     contextualize_q_system_prompt = (
